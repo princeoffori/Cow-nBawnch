@@ -1,0 +1,86 @@
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+  height: 100%;
+  grid-template-rows: 100px 1fr;
+}
+
+
+
+.App-header {
+  background-color: darkblue;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header h1{
+  font-size: 34px;
+  margin-bottom: 5px;
+  align-items: left;
+  justify-content: left;
+}
+
+.App-header h6{
+  margin-top: 5px;
+  font-size: 20;
+  margin-bottom: 5px;
+}
+
+#home-btn {
+  float: right;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.main-content {
+  background-color: antiquewhite;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.control{
+  display: flex;
+  justify-content: center;
+  width: 500px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.issue {
+  display: flex;
+  width: 500px;
+  flex-direction: column;
+  align-items: center;
+}
