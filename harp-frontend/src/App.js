@@ -21,7 +21,49 @@ class App extends Component {
 
   constructor() {
     super();
-    this.state = {}
+    this.state = {
+      issue: [],
+      receive: []
+    }
+    this.addItem = this.addItem.bind(this)
+    this.issueReceipt = this.issueReceipt.bind(this)
+    this.resetIssue = this.resetIssue.bind(this)
+
+
+  }
+
+  addItem(){
+
+    const itemNSN = document.getElementById('itemNSN').value;
+    const nomenclature = document.getElementById('nomenclature').value;
+    const serialNum = document.getElementById('serialNum').value;
+    const unit = document.getElementById('unit').value;
+    const qty = document.getElementById('qty').value;
+
+    const newIssue = [...this.state.issue]
+
+    newIssue.push({
+      itemNSN: itemNSN, 
+      nomenclature: nomenclature, 
+      serialNum: serialNum, 
+      unit: unit, 
+      qty: qty})
+
+  
+    this.setState({...this.state, issue: newIssue})
+  }
+
+  issueReceipt(){
+
+    const username = document.getElementById("username").value;
+
+    const newReceive = [...this.state.receive]
+    newReceive.push({username: username, receipt: this.state.issue})
+    this.setState({...this.state, receive: newReceive})
+  }
+
+  resetIssue(){
+    this.setState({...this.state, issue: []})
   }
 
   render() {
@@ -30,7 +72,7 @@ class App extends Component {
 
         <Router>
           <header className="App-header">
-            <h1 id="page-title">Hand Recepit Portal</h1>
+            <h1 id="page-title">Hand Receipt Portal</h1>
             <h6 id="page-title">(HaRP System)</h6>
             <h6 id="page-slogan">Property Accountability Simplified for You</h6>
             <Link to="/">
@@ -43,11 +85,12 @@ class App extends Component {
           <div className="main-content">
               <Switch>
                 <Route exact path="/">
-                  <Home />
+                  <Home resetIssue={this.resetIssue}/>
+                  {console.log(this.state.receive)}
                 </Route>
 
                 <Route path="/login">
-                  <Login />
+                 <Login />
                 </Route>
                 
                 <Route path="/create-account">
@@ -55,7 +98,7 @@ class App extends Component {
                 </Route>
 
                 <Route path="/issue">
-                  <Issue />
+                  <Issue issueReceipt={this.issueReceipt} addItem={this.addItem} issue={this.state.issue}/>
                 </Route>
 
                 <Route path="/receive">

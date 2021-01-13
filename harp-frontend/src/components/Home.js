@@ -6,7 +6,7 @@ import {
 
 
 
-export default function Home () {
+export default function Home ({resetIssue}) {
     return(
         <>
         <br />
@@ -17,7 +17,7 @@ export default function Home () {
                         <h5>Issue Item</h5>
                         <p>Click button to issue new items</p>
                         <Link to="/issue">
-                            <button className='btn btn-primary'>Issue Item</button>
+                            <button className='btn btn-primary' onClick={resetIssue}>Issue Item</button>
                         </Link>
                     </div>
                 </div>
