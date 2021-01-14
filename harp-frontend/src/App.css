@@ -1,0 +1,111 @@
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+  height: 100%;
+  grid-template-rows: 100px 1fr;
+}
+
+
+
+.App-header {
+  background-color: darkblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header h1{
+  font-size: 28px;
+  position: relative;
+  float: left;
+  margin-bottom: 5px;
+  align-items: left;
+  justify-self: left;
+}
+
+.App-header h6{
+  margin-top: 5px;
+  font-size: 15px;
+}
+
+#home-btn {
+  float: right;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.main-content {
+  background-color: antiquewhite;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.control{
+  display: flex;
+  justify-content: center;
+  width: 500px;
+}
+
+
+.container {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.issue {
+  display: flex;
+  width: 500px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-primary {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.btn-danger {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+
+.receiveItemCntr {
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+}
+.receiveItemButton {
+  flex-wrap: inherit;
+  font-size: larger;
+  display: inline;
+  justify-content: left;
+  margin: 0em 7em 1em 7em;
+}
