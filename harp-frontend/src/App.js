@@ -35,37 +35,40 @@ class App extends Component {
       issue: [],
       outstanding: [],
       receive: [{
+        issuer: 'Anthony',
         username: 'Tristan',
         id: 1,
-        receipt: [{itemNSN: 123,
-          nomenclature: 'test',
-          serialNum: 456,
+        receipt: [{itemNSN: '6620-00-621-2903',
+          nomenclature: 'F/F Indicator',
+          serialNum: 8675309,
           unit: 'ea',
-          qty: 69},
-          {itemNSN: 789,
-          nomenclature: 'test2',
+          qty: 1},
+          {itemNSN: '6615-01-426-5623',
+          nomenclature: 'Luft Balloons',
           serialNum: 223,
           unit: 'ea',
-          qty: 40}
+          qty: 99}
         ]
       },
       {
+        issuer: 'Prince',
         username: 'Anthony',
         id: 2,
-        receipt: [{itemNSN: 123,
-          nomenclature: 'not a test',
-          serialNum: 456,
+        receipt: [{itemNSN: '5518-00-442-1197',
+          nomenclature: '$1000 Bill',
+          serialNum: 5896316,
           unit: 'ea',
-          qty: 69},
-          {itemNSN: 789,
-          nomenclature: 'test2',
-          serialNum: 223,
-          unit: 'ea',
-          qty: 40}
+          qty: 1},
+          {itemNSN: '6610-00-125-5555',
+          nomenclature: 'Milk Carton',
+          serialNum: 'N/A',
+          unit: '20',
+          qty: 4}
         ]
       }],
       idCounter: 2,
-      info: 'No Info'
+      info: 'No Info',
+      user: 'Nobody'
     }
     this.addItem = this.addItem.bind(this)
     this.issueReceipt = this.issueReceipt.bind(this)
@@ -73,6 +76,10 @@ class App extends Component {
     this.deleteReceive = this.deleteReceive.bind(this)
     this.acceptReceive = this.acceptReceive.bind(this)
     this.closeOutstanding = this.closeOutstanding.bind(this)
+    this.login = this.login.bind(this)
+    this.clearItem = this.clearItem.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
+
 
 
   }
@@ -111,7 +118,15 @@ class App extends Component {
       qty: qty})
 
   
-    this.setState({...this.state, issue: newIssue})
+    this.setState({...this.state, issue: newIssue}, this.clearItem)
+  }
+
+  clearItem() {
+    document.getElementById('itemNSN').value=''
+    document.getElementById('nomenclature').value=''
+    document.getElementById('serialNum').value=''
+    document.getElementById('unit').value=''
+    document.getElementById('qty').value='';
   }
 
   issueReceipt(){
@@ -120,9 +135,17 @@ class App extends Component {
 
     const newReceive = [...this.state.receive]
     const newID = Number(this.state.idCounter) + 1
-    newReceive.push({username: username, id: newID, receipt: this.state.issue})
+    newReceive.push({username: username, issuer: this.state.user, id: newID, receipt: this.state.issue})
     this.setState({...this.state, receive: newReceive, idCounter: newID}, this.resetIssue)
   }
+
+  deleteItem(index){
+
+    let newIssue = [...this.state.issue]
+    newIssue.splice(index, 1)
+    this.setState({...this.state, issue: newIssue})
+  }
+
 
   deleteReceive(itemId){
     const newReceive = [...this.state.receive]
@@ -151,7 +174,11 @@ class App extends Component {
   }
 
   resetIssue(){
-    this.setState({...this.state, issue: [], info: 'No Info'})
+    this.setState({...this.state, issue: [], info: 'No Info'}, this.clearItem)
+  }
+
+  login(username){
+    this.setState({...this.state, user: username})
   }
 
   render() {
@@ -161,13 +188,19 @@ class App extends Component {
         <Router>
           <header className="App-header">
             <h1 id="page-title">Hand Receipt Portal</h1>
-            <h6 id="page-title">(HaRP System)</h6>
+            <h5 id="page-title">(HaRP System)</h5>
             <h6 id="page-slogan">Property Accountability Simplified for You</h6>
+            <div id="nav-buttons">
+
+            <Link to="/login">
+              <button className="btn btn-outline-light">Logged in as: {this.state.user}</button>
+            </Link>
             <Link to="/">
                 {/* <input type="image" src="./images/homeicon.png" /> */}
                   {/* <img id="home-btn" width="30px" src="https://www.stonybrook.edu/commcms/studentaffairs/res/_images/home_icon.png" onClick={this.checkCookie}/> */}
                   <img id="home-btn" width="30px" src="https://www.stonybrook.edu/commcms/studentaffairs/res/_images/home_icon.png" />
             </Link>
+            </div>
             {/* <img src={homeicon}/> */}
 
           </header>
@@ -178,7 +211,7 @@ class App extends Component {
                 </Route>
 
                 <Route path="/login">
-                 <Login />
+                 <Login login={this.login}/>
                 </Route>
                 
                 <Route path="/create-account">
@@ -186,11 +219,11 @@ class App extends Component {
                 </Route>
 
                 <Route path="/issue">
-                  <Issue issueReceipt={this.issueReceipt} addItem={this.addItem} issue={this.state.issue}/>
+                  <Issue deleteItem={this.deleteItem} issueReceipt={this.issueReceipt} addItem={this.addItem} issue={this.state.issue}/>
                 </Route>
 
                 <Route exact path="/receive">
-                  <Receive receive={this.state.receive}/>
+                  <Receive receive={this.state.receive} user={this.state.user}/>
                 </Route>
 
                 <Route exact path="/receive/:itemId">
@@ -198,7 +231,7 @@ class App extends Component {
                 </Route>
 
                 <Route exact path="/close">
-                  <Close outstanding={this.state.outstanding}/>
+                  <Close outstanding={this.state.outstanding} user={this.state.user}/>
                 </Route>
 
                 <Route exact path="/close/:itemId">

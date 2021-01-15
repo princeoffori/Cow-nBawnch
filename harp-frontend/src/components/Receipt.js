@@ -17,14 +17,34 @@ export default function Receipt ({allReceipts, deleteReceive, acceptReceive, inf
         const receipt = selectedReceiptWrapper.receipt 
 
         info = (
-        <h6>
-            <ul>
-            {receipt.map( (item) => {
-                return <li key={item.serialNum}> {`${item.itemNSN} | ${item.nomenclature} | ${item.serialNum} | ${item.unit} | ${item.qty}`} </li>
-            })}
-            </ul>
-        </h6>
-        )
+            <>
+            <h1>Reviewing Receipt #{selectedReceiptWrapper.id} from {selectedReceiptWrapper.issuer}</h1>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Item NSN</th>
+                        <th scope="col">Nomenclature</th>
+                        <th scope="col">Serial Number</th>
+                        <th scope="col">Unit of Issue</th>
+                        <th scope="col">QTY</th>
+                    </tr>
+                </thead>
+                {receipt.map( (item) => {
+                    return(
+                            <tbody>
+                                <tr>
+                                    <td>{item.itemNSN}</td>
+                                    <td>{item.nomenclature}</td>
+                                    <td>{item.serialNum}</td>
+                                    <td>{item.unit}</td>
+                                    <td>{item.qty}</td>
+                                </tr>
+                            </tbody>
+                )})}
+            </table>
+            
+            </>
+         )
     } 
     return(
         <>
@@ -36,7 +56,7 @@ export default function Receipt ({allReceipts, deleteReceive, acceptReceive, inf
                     </div>
                     <div className="row"> 
                         <div className="col"><button className="btn btn-primary" onClick={() => acceptReceive(itemId)}>Agree</button></div>
-                        <div className="col"><button className="btn btn-danger" onClick={() => deleteReceive(itemId)} >Disagree</button></div>
+                        <div className="col"><button className="btn btn-danger btn-margin" onClick={() => deleteReceive(itemId)} >Disagree</button></div>
                         
                         
                     </div>

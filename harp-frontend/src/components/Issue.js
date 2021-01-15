@@ -5,15 +5,16 @@ import {
   } from "react-router-dom";
 
 
-export default function Issue ({issueReceipt, addItem, issue}) {
+export default function Issue ({issueReceipt, addItem, issue, deleteItem}) {
     return(
         <>
+            <h1>Issue Items</h1>
             <br />
             <div className="container">
                 <div className="row">
                     <div className="col">
                         <input type="text" class="form-control" id="username" aria-label="Sizing example input" placeholder="Username" />
-                        <br />
+                        <br /><hr></hr>
                         <input type="text" class=" form-control" id="itemNSN" aria-label="Sizing example input" placeholder="Item NSN" />
                         <br />
                         <input type="text" class=" form-control" id="nomenclature" aria-label="Sizing example input" placeholder="Nomenclature" />
@@ -39,28 +40,21 @@ export default function Issue ({issueReceipt, addItem, issue}) {
                                     <th scope="col">QTY</th>
                                 </tr>
                             </thead>
-                        </table>
-                        {issue.map( (item) => {
+                        {issue.map( (item, index) => {
                             return(
-                                <table className="table table-striped">
-                                    <tbody>
+                                <tbody>
                                         <tr>
                                             <td>{item.itemNSN}</td>
                                             <td>{item.nomenclature}</td>
                                             <td>{item.serialNum}</td>
                                             <td>{item.unit}</td>
                                             <td>{item.qty}</td>
+                                            <td><button id="deleteItemButton" className="btn btn-danger" onClick={() => deleteItem(index)}>X</button></td> 
                                         </tr>
                                     </tbody>
-                                </table>
-                                
-                                // <h6>
-                                //     <ul>
-                                //         <li>{` |  |  |  | `} </li>
-                                //     </ul>
-                                // </h6>
                             )
                         })}
+                        </table>
                         
                     </div>
                     <div className="row">

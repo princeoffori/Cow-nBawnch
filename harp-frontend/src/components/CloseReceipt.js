@@ -9,24 +9,39 @@ export default function CloseReceipt({ allReceipts, closeOutstanding, info }) {
     let {itemId} = useParams()
     const selectedReceiptWrapper = allReceipts.find((receipt) => Number(receipt.id) === Number(itemId))
 
-    console.log(Number(itemId))
-    console.log(allReceipts)
-    console.log(selectedReceiptWrapper)
-
-
     if (selectedReceiptWrapper) {
         const receipt = selectedReceiptWrapper.receipt
 
         info = (
-            <h6>
-                <ul>
-                    {receipt.map((item) => {
-                        return <li key={item.serialNum}> {`${item.itemNSN} | ${item.nomenclature} | ${item.serialNum} | ${item.unit} | ${item.qty}`} </li>
-                    })}
-                </ul>
-            </h6>
+            <>
+            <h1>Closing Receipt #{selectedReceiptWrapper.id} with {selectedReceiptWrapper.username}</h1>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Item NSN</th>
+                        <th scope="col">Nomenclature</th>
+                        <th scope="col">Serial Number</th>
+                        <th scope="col">Unit of Issue</th>
+                        <th scope="col">QTY</th>
+                    </tr>
+                </thead>
+                {receipt.map( (item) => {
+                    return(
+                            <tbody>
+                                <tr>
+                                    <td>{item.itemNSN}</td>
+                                    <td>{item.nomenclature}</td>
+                                    <td>{item.serialNum}</td>
+                                    <td>{item.unit}</td>
+                                    <td>{item.qty}</td>
+                                </tr>
+                            </tbody>
+                )})}
+            </table>
+            </>
         )
     }
+
     return (
         <>
             <br />
@@ -36,7 +51,7 @@ export default function CloseReceipt({ allReceipts, closeOutstanding, info }) {
                         {info}
                     </div>
                     <div className="row">
-                        <div className="col"><button className="btn btn-danger" onClick={() => closeOutstanding(itemId)}>Close Receipt</button></div>
+                        <div className="col"><button className="btn btn-danger btn-margin" onClick={() => closeOutstanding(itemId)}>Close Receipt</button></div>
 
 
                     </div>
