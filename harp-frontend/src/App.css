@@ -12,6 +12,9 @@ html, body {
   grid-template-rows: 100px 1fr;
 }
 
+.App h1 {
+  font-weight: 700;
+}
 
 
 .App-header {
@@ -21,10 +24,11 @@ html, body {
   justify-content: left;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-top: 10px;
 }
 
 .App-header h1{
-  font-size: 28px;
+  font-size: 40px;
   position: relative;
   float: left;
   margin-bottom: 5px;
@@ -35,10 +39,23 @@ html, body {
 .App-header h6{
   margin-top: 5px;
   font-size: 15px;
+  margin-bottom: 2px;
 }
 
 #home-btn {
   float: right;
+  margin-right: 30%;
+  margin-bottom: 5px;
+  margin-left: 80px;
+  padding-top: 10px;
+}
+
+#nav-buttons {
+  display:flex;
+  justify-content: center;
+  padding: 10px;
+  align-items: center;
+  margin-bottom:5px;
 }
 
 .App-link {
@@ -58,6 +75,7 @@ html, body {
   background-color: antiquewhite;
   height: 100%;
   grid-template-columns: 1fr 1fr 1fr;
+  padding-top: 15px;
 }
 
 .row {
@@ -91,7 +109,7 @@ html, body {
   margin-bottom: 1em;
 }
 
-.btn-danger {
+.btn-margin {
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -108,4 +126,11 @@ html, body {
   display: inline;
   justify-content: left;
   margin: 0em 7em 1em 7em;
+}
+
+#deleteItemButton {
+  padding:1px 5px 1px 5px;
+  height: 50%;
+  font-size: smaller;
+
 }
