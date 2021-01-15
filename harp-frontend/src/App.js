@@ -1,4 +1,4 @@
-//Matt's phone number: 520-559-4436
+//Matt's phone number: 520-559-4436 <- Call for a good time
 
 import './App.css';
 import { Component } from 'react';
@@ -15,10 +15,10 @@ import Cookie from 'js-cookie'
 import Home from './components/Home'
 import Issue from './components/Issue'
 import Receipt from './components/Receipt'
-
 import Receive from './components/Receive'
 import Close from './components/Close'
 import Login from './components/Login'
+import CloseReceipt from './components/CloseReceipt'
 import History from './components/BrowserHistory'
 
 
@@ -65,12 +65,14 @@ class App extends Component {
         ]
       }],
       idCounter: 2,
+      info: 'No Info'
     }
     this.addItem = this.addItem.bind(this)
     this.issueReceipt = this.issueReceipt.bind(this)
     this.resetIssue = this.resetIssue.bind(this)
     this.deleteReceive = this.deleteReceive.bind(this)
-
+    this.acceptReceive = this.acceptReceive.bind(this)
+    this.closeOutstanding = this.closeOutstanding.bind(this)
 
 
   }
@@ -126,20 +128,30 @@ class App extends Component {
     const newReceive = [...this.state.receive]
     const index = newReceive.findIndex(receipt => receipt.id === Number(itemId))
     newReceive.splice(index, 1)
-    this.setState({...this.state, receive: newReceive})
+    let newInfo = this.state.info.slice()
+    if(this.state.info !== 'You have accepted this receipt.'){
+      newInfo = 'This receipt has been REJECTED!'
+    }
+    this.setState({...this.state, receive: newReceive, info: newInfo})
     
+  }
+
+  closeOutstanding(itemId){
+    const newOutstanding = [...this.state.outstanding]
+    const index = newOutstanding.findIndex(receipt => receipt.id === Number(itemId))
+    newOutstanding.splice(index, 1)
+    this.setState({...this.state, outstanding: newOutstanding, info: 'This receipt is now closed.'})
   }
 
   acceptReceive(itemId){
     const newOutstanding= [...this.state.outstanding]
     const index = this.state.receive.findIndex(receipt => receipt.id === Number(itemId))
     newOutstanding.push(this.state.receive[index])
-    this.setState({...this.state, outstanding: newOutstanding})
-    
+    this.setState({...this.state, outstanding: newOutstanding, info: 'You have accepted this receipt.'}, () => this.deleteReceive(itemId))
   }
 
   resetIssue(){
-    this.setState({...this.state, issue: []})
+    this.setState({...this.state, issue: [], info: 'No Info'})
   }
 
   render() {
@@ -182,11 +194,15 @@ class App extends Component {
                 </Route>
 
                 <Route exact path="/receive/:itemId">
-                  <Receipt allReceipts={this.state.receive} deleteReceive={this.deleteReceive}/>
+                  <Receipt allReceipts={this.state.receive} info={this.state.info} deleteReceive={this.deleteReceive} acceptReceive={this.acceptReceive}/>
                 </Route>
 
-                <Route path="/close">
-                  <Close />
+                <Route exact path="/close">
+                  <Close outstanding={this.state.outstanding}/>
+                </Route>
+
+                <Route exact path="/close/:itemId">
+                  <CloseReceipt allReceipts={this.state.outstanding} info={this.state.info} closeOutstanding={this.closeOutstanding}/>
                 </Route>
 
               </Switch>

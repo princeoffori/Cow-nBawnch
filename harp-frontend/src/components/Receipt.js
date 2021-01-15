@@ -6,12 +6,12 @@ import {
   } from "react-router-dom";
 
 
-export default function Receipt ({allReceipts, deleteReceive}) {
+export default function Receipt ({allReceipts, deleteReceive, acceptReceive, info}) {
 
     let {itemId} = useParams()
     const selectedReceiptWrapper = allReceipts.find((receipt) => Number(receipt.id) === Number(itemId))
 
-    let info = <>No Info</>
+    
 
     if (selectedReceiptWrapper){
         const receipt = selectedReceiptWrapper.receipt 
@@ -35,7 +35,7 @@ export default function Receipt ({allReceipts, deleteReceive}) {
                         {info}
                     </div>
                     <div className="row"> 
-                        <div className="col"><button className="btn btn-primary" onClick={() => console.log('click')}>Agree</button></div>
+                        <div className="col"><button className="btn btn-primary" onClick={() => acceptReceive(itemId)}>Agree</button></div>
                         <div className="col"><button className="btn btn-danger" onClick={() => deleteReceive(itemId)} >Disagree</button></div>
                         
                         
